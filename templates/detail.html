@@ -15,7 +15,7 @@
 			<ul class="cart_goods_show">
                 {% for cart_goods in cart_goods_list %}
                     <li>
-                         <img src={{ cart_goods.goods_img }} alt="商品图片">
+                         <img src="/static/goods/{{ cart_goods.goods_img }}.jpg" alt="商品图片">
                             {{ cart_goods.goods_desc }}
                         <div>{{ cart_goods.goods_num }}</div>
 				    </li>
@@ -32,7 +32,7 @@
 				<span></span>			
 				<ul class="subnav">
                     {% for cag in categories %}
-                        <li><a href="/static//goods/?cag={{ cag.id }}&amp;page=1" class={{ cag.cag_css }}>{{ cag.cag_name }}</a></li>
+                        <li><a href="/static/goods/?cag={{ cag.id }}&amp;page=1" class={{ cag.cag_css }}>{{ cag.cag_name }}</a></li>
                     {% endfor %}
 				</ul>
 			</div>
