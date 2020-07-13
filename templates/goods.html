@@ -1,105 +1,51 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>{{ current_cag.cag_name }}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
-</head>
-<body>
-{#购物车#}
-<div class="search_bar clearfix">
-    <a href="/index/" class="logo fl"><img src="/static/images/logo.png"></a>
-    <div class="guest_cart fr">
-        <a href="/cart/show_cart/" class="cart_name fl">我的购物车</a>
-        <div class="goods_count fl">{{ cart_goods_count }}</div>
-        <ul class="cart_goods_show">
-            {% for cart_goods in cart_goods_list %}
+{% extends "base.html" %}
+{% block content %}
+{#    导航#}
+    <div class="breadcrumb">
+        <span>当前分类:</span>
+        <a href="/index/">全部分类</a>
+		<span>&gt;</span>
+        <a href="/goods/?cag={{ current_cag.id }}&amp;page=1">{{ current_cag.cag_name }}</a>
+    </div>
+    {#当前页面的商品#}
+    <div class="main_wrap clearfix">
+
+        <div class="sort_bar"></div>
+
+        <ul class="goods_type_list clearfix">
+
+            {% for goods in page_data %}
                 <li>
-                    <img src="/static/goods/{{ cart_goods.goods_img }}.jpg" alt="商品图片">
-                    {{ cart_goods.goods_desc }}
-                    <div>{{ cart_goods.goods_num }}</div>
+                    <a href="/detail/?id={{ goods.id }}"><img src="/static/goods/{{ goods.goods_img }}.jpg"></a>
+                    <div class="operate">
+                        <h4><a href="/detail/?id={{ goods.id }}">{{ goods.goods_name }}</a></h4>
+                        <span class="prize">￥32</span>
+                    </div>
                 </li>
             {% endfor %}
+
         </ul>
 
-    </div>
-</div>
-{#全部商品分类#}
-<div class="navbar_con">
-    <div class="navbar clearfix">
-        <div class="subnav_con fl">
-            <h1>全部商品分类</h1>
-            <span></span>
-            <ul class="subnav">
-                {% for cag in categories %}
-                    <li><a href="?cag={{ cag.id }}&amp;page=1" class={{ cag.cag_css }}>{{ cag.cag_name }}</a></li>
-                {% endfor %}
-            </ul>
+
+        <div class="pagenation">
+            {% if page_data.has_previous %}
+                <a href="?cag={{ current_cag.id }}&amp;page={{ page_data.previous_page_number }}">上一页</a>
+            {% endif %}
+
+            {#                    页码的范围，从1开始，例如[1, 2, 3, 4]#}
+            {% for index in paginator.page_range %}
+                {% if index ==  page_data.number %}
+                    {#                        高亮当前页码#}
+                    <a href="?cag={{ current_cag.id }}&amp;page={{ index }}" class="active">{{ index }}</a>
+                {% else %}
+                    <a href="?cag={{ current_cag.id }}&amp;page={{ index }}">{{ index }}</a>
+                {% endif %}
+            {% endfor %}
+
+
+            {% if page_data.has_next %}
+                <a href="?cag={{ current_cag.id }}&amp;page={{ page_data.next_page_number }}">下一页&gt;</a>
+            {% endif %}
         </div>
     </div>
-</div>
-
-<div class="breadcrumb">
-    <a href="#">当前分类:</a>
-    <span></span>
-    <a href="#">{{ current_cag.cag_name }}</a>
-</div>
-{#当前页面的商品#}
-<div class="main_wrap clearfix">
-
-    <div class="sort_bar"></div>
-
-    <ul class="goods_type_list clearfix">
-
-        {% for goods in page_data %}
-            <li>
-                <a href="/detail/?id={{ goods.id }}"><img src="/static/goods/{{ goods.goods_img }}.jpg"></a>
-                <div class="operate">
-                    <h4><a href="/detail/?id={{ goods.id }}">{{ goods.goods_name }}</a></h4>
-                    <span class="prize">￥32</span>
-                </div>
-            </li>
-        {% endfor %}
-
-    </ul>
-
-
-    <div class="pagenation">
-        {% if page_data.has_previous %}
-            <a href="?cag={{ current_cag.id }}&amp;page={{ page_data.previous_page_number }}">上一页</a>
-        {% endif %}
-
-        {#                    页码的范围，从1开始，例如[1, 2, 3, 4]#}
-        {% for index in paginator.page_range %}
-            {% if index ==  page_data.number %}
-                {#                        高亮当前页码#}
-                <a href="?cag={{ current_cag.id }}&amp;page={{ index }}" class="active">{{ index }}</a>
-            {% else %}
-                <a href="?cag={{ current_cag.id }}&amp;page={{ index }}">{{ index }}</a>
-            {% endif %}
-        {% endfor %}
-
-
-        {% if page_data.has_next %}
-            <a href="?cag={{ current_cag.id }}&amp;page={{ page_data.next_page_number }}">下一页&gt;</a>
-        {% endif %}
-    </div>
-</div>
-
-<div class="footer">
-    <div class="foot_link">
-        <a href="#">关于我们</a>
-        <span>|</span>
-        <a href="#">联系我们</a>
-        <span>|</span>
-        <a href="#">招聘人才</a>
-        <span>|</span>
-        <a href="#">友情链接</a>
-    </div>
-    <p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
-    <p>电话：010-****888 京ICP备*******8号</p>
-</div>
-
-
-</body>
-</html>
+{% endblock %}

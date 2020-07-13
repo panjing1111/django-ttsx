@@ -1,48 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>有味有道 钟爱一生 12 ~ 14支百合花鲜花 1束-商品详情</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-</head>
-<body>
-{#购物车#}
-	<div class="search_bar clearfix">
-		<a href="/index/" class="logo fl"><img src="/static/images/logo.png"></a>
-		<div class="guest_cart fr">
-			<a href="/cart/show_cart/" class="cart_name fl">我的购物车</a>
-            <div class="goods_count fl">{{ cart_goods_count }}</div>
-			<ul class="cart_goods_show">
-                {% for cart_goods in cart_goods_list %}
-                    <li>
-                         <img src="/static/goods/{{ cart_goods.goods_img }}.jpg" alt="商品图片">
-                            {{ cart_goods.goods_desc }}
-                        <div>{{ cart_goods.goods_num }}</div>
-				    </li>
-                {% endfor %}
-
-			</ul>
-		</div>
-	</div>
-{#商品分类#}
-	<div class="navbar_con">
-		<div class="navbar clearfix">
-			<div class="subnav_con fl">
-				<h1>全部商品分类</h1>	
-				<span></span>			
-				<ul class="subnav">
-                    {% for cag in categories %}
-                        <li><a href="/static/goods/?cag={{ cag.id }}&amp;page=1" class={{ cag.cag_css }}>{{ cag.cag_name }}</a></li>
-                    {% endfor %}
-				</ul>
-			</div>
-		</div>
-	</div>
-
+{% extends "base.html" %}
+{% block content %}
 	<div class="breadcrumb">
-		<a href="#">全部分类</a>
+		<a href="/index/">全部分类</a>
 		<span>&gt;</span>
-		<a href="/static/goods/?cag={{ goods_data.goods_cag.id }}&amp;page=1">{{ goods_data.goods_cag.cag_name }}</a>
+		<a href="/goods/?cag={{ goods_data.goods_cag.id }}&amp;page=1">{{ goods_data.goods_cag.cag_name }}</a>
 		<span>&gt;</span>
 		<a href="#">商品详情</a>
 	</div>
@@ -79,21 +40,4 @@
 				</dl>
 			</div>
 	</div>
-
-	<div class="footer">
-		<div class="foot_link">
-			<a href="#">关于我们</a>
-			<span>|</span>
-			<a href="#">联系我们</a>
-			<span>|</span>
-			<a href="#">招聘人才</a>
-			<span>|</span>
-			<a href="#">友情链接</a>		
-		</div>
-		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
-		<p>电话：010-****888    京ICP备*******8号</p>
-	</div>
-	
-
-</body>
-</html>
+{% endblock %}
