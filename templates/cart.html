@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block cag_list %}{% endblock %}
+{% block cart_list %}{% endblock %}
+{% block content %}
+    <div class="total_count">全部商品<em>{{ cart_goods_count }}</em>件</div>
+    <ul class="cart_list_th clearfix">
+        <li class="col01">商品名称</li>
+        <li class="col03">商品价格</li>
+        <li class="col04">数量</li>
+        <li class="col05">小计</li>
+        <li class="col06">操作</li>
+    </ul>
+
+{#购物车商品#}
+    {% for cart_goods in cart_goods_list %}
+        <ul class="cart_list_td clearfix">
+            <li class="col01"></li>
+            <li class="col02"><img src="/static/goods/{{ cart_goods.goods_img }}.jpg"></li>
+            <li class="col03">{{ cart_goods.goods_name }}<br></li>
+            <li class="col05">{{ cart_goods.goods_price }}元</li>
+            <li class="col06">{{ cart_goods.goods_num }}</li>
+            <li class="col07">{{ cart_goods.total_money }}元</li>
+            <li class="col08"><a href="/cart/remove_cart/?id={{ cart_goods.id }}">删除</a></li>
+        </ul>
+    {% endfor %}
+{#结算#}
+    <ul class="settlements">
+		<li class="col01">.</li>
+		<li class="col02">.</li>
+		<li class="col03">合计(不含运费)：<span>¥</span><em>{{ cart_goods_money }}</em><br>共计<b>{{ cart_goods_count }}</b>件商品</li>
+		<li class="col04"><a href="/cart/place_order/">去结算</a></li>
+	</ul>
+
+{% endblock %}

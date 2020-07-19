@@ -23,7 +23,7 @@ def index(request):
         # cag.goods_list是新创建的变量 用来保存类别对应的4个最近的商品
         cag.goods_list = cag.goodsinfo_set.order_by('-id')[:4]
     # 3.购物车商品数据 从cookie中获取 {商品id：数量}
-    cart_goods_list, cart_goods_count = get_cart_data(request)
+    cart_goods_list, cart_goods_count, _ = get_cart_data(request)
     context = {'categories':categories,
                "cart_goods_list":cart_goods_list,
                "cart_goods_count":cart_goods_count}
@@ -36,7 +36,7 @@ def detail(request):
     # 商品分类
     categories = GoodsCategory.objects.all()
     # 购物车数据
-    cart_goods_list, cart_goods_count = get_cart_data(request)
+    cart_goods_list, cart_goods_count, _ = get_cart_data(request)
 
     context = {'categories':categories,
                "cart_goods_list":cart_goods_list,
@@ -58,7 +58,7 @@ def goods(request):
     # 所有分类
     categories = GoodsCategory.objects.all()
     # 购物车
-    cart_goods_list, cart_goods_count = get_cart_data(request)
+    cart_goods_list, cart_goods_count, _ = get_cart_data(request)
     context = {
         "current_cag":current_cag,
         "categories":categories,

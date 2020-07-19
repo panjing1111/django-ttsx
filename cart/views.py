@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
+from goods.utils import get_cart_data
 
 # Create your views here.
 
@@ -22,7 +23,32 @@ def add_cart(request):
     prev_url = request.META['HTTP_REFERER']
     response = redirect(prev_url)
     response.set_cookie(goods_id, goods_count)
+
     return response
 
+def show_cart(request):
+    '''显示购物车'''
+    # 购物车中的商品列表、购物车中的商品总数、购物车中的商品总价
+    # cart_goods_list中的一个元素是GoodsInfo对象
+    cart_goods_list, cart_goods_count, cart_goods_money = get_cart_data(request, True)
+    context = {'cart_goods_list':cart_goods_list,
+               'cart_goods_count':cart_goods_count,
+               'cart_goods_money':cart_goods_money
+               }
 
+    return render(request, 'cart.html', context)
 
+def remove_cart(request):
+    '''删除购物城中的一个商品'''
+    # 获取要删除的商品id
+    goods_id = request.GET.get('id', '')
+    # 查看cookie中是否有goods_id
+    goods_count = request.COOKIES.get(goods_id)
+    # 重定向到当前页面
+    prev_url = request.META['HTTP_REFERER']
+    response = redirect(prev_url)
+    if goods_count:
+        # 删除cookie中的商品
+        response.delete_cookie(goods_id)
+
+    return response
