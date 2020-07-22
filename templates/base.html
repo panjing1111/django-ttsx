@@ -11,19 +11,14 @@
 
 <body>
 
-
-{#    购物车#}
+{% block cart_list %}
+{#logo与购物车按钮#}
 <div class="search_bar clearfix">
-    {#天天生鲜LOGO#}
     <a href="/index/" class="logo fl"><img src="/static/images/logo.png"></a>
-    {% block cart_list %}
         <div class="guest_cart fr">
             <a href="/cart/show_cart/" class="cart_name fl">我的购物车</a>
             <div class="goods_count fl">{{ cart_goods_count }}</div>
             <ul class="cart_goods_show">
-                {#                context = {'categories':categories,#}
-                {#               "cart_goods_list":cart_goods_list,#}
-                {#               "cart_goods_count":cart_goods_count}#}
                 {% for cart_goods in cart_goods_list %}
                     <li>
                         <img src="/static/goods/{{ cart_goods.goods_img }}.jpg" alt="商品图片">
@@ -32,10 +27,10 @@
                     </li>
                 {% endfor %}
             </ul>
-
         </div>
-    {% endblock %}
 </div>
+{% endblock %}
+
 
 {% block cag_list %}
     {#全部商品分类下拉列表，会自动继承cag_list中的代码；如需要重写，则手动继承，然后写入修改后的代码#}

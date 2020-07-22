@@ -28,7 +28,7 @@ class OrderInfo(models.Model):
 
 
 class OrderGoods(models.Model):
-    """订单商品模型"""
+    """订单中的商品模型， 一个订单对应多个商品 一对多，因此订单商品是外键"""
 
     # 所属商品
     goods_info = models.ForeignKey('goods.GoodsInfo')

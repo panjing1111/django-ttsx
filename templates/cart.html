@@ -1,6 +1,12 @@
 {% extends "base.html" %}
-{% block cag_list %}{% endblock %}
-{% block cart_list %}{% endblock %}
+{% block cag_list %}{% endblock %} {#是否要列表分类下拉框#}
+{#logo#}
+{% block cart_list %}
+<div class="search_bar clearfix">
+    <a href="/index/" class="logo fl"><img src="/static/images/logo.png"></a>
+    <div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;购物车</div>
+</div>
+{% endblock %}
 {% block content %}
     <div class="total_count">全部商品<em>{{ cart_goods_count }}</em>件</div>
     <ul class="cart_list_th clearfix">
@@ -28,7 +34,14 @@
 		<li class="col01">.</li>
 		<li class="col02">.</li>
 		<li class="col03">合计(不含运费)：<span>¥</span><em>{{ cart_goods_money }}</em><br>共计<b>{{ cart_goods_count }}</b>件商品</li>
-		<li class="col04"><a href="/cart/place_order/">去结算</a></li>
+
+        {% if cart_goods_count %}
+            <li class="col04"><a href="/cart/place_order/">去结算</a></li>
+        {% else %}
+            <li class="col04"><a disabled="true">去结算</a></li>
+        {% endif %}
+
+
 	</ul>
 
 {% endblock %}

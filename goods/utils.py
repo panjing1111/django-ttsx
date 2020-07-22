@@ -26,4 +26,4 @@ def get_cart_data(request, price=False):
                 # cookie中当前商品的总价 单价*数量
                 cart_goods.total_money = goods_num * cart_goods.goods_price
                 cart_goods_money += cart_goods.total_money
-    return cart_goods_list, cart_goods_count, cart_goods_money if cart_goods_money else None
+    return cart_goods_list, cart_goods_count, cart_goods_money
